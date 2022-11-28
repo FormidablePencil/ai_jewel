@@ -29,6 +29,8 @@ impl DesireVariables {
             RoiExists::OnlyActualRoiVarExist
         } else if assumed_roi_var_exists && actual_roi_var_exists {
             RoiExists::BothAssumedAndActualRoiVarExist
+        } else {
+            todo!("Should never be hit!")
         }
     }
 

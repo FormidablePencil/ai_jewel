@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use crate::artifacts::ai_gen::hello::Ai;
 use crate::artifacts::data_center::DataCenter;
 use crate::artifacts::desire_variables::DesireVariables;
 use crate::artifacts::game::{Game, Player};
@@ -11,14 +10,18 @@ pub struct MyTask {
 }
 
 fn ai_gen() {
-    Ai::new();
+    Ai {
+        // database: &data_center,
+        operations_center: OperationsCenter {
+            database: &mut DataCenter::default_data_center(),
+            game: Game::new(),
+        }
+    };
 }
 
-pub type MyDatabase = DataCenter<MyTask, DesireVariables>;
-
-pub struct Ai<'a, Task, DesireVariables> {
-    database: &'a MyDatabase,
-    operations_center: OperationsCenter<'a, Task, DesireVariables>,
+pub struct Ai<'a> {
+    // database: &'a DataCenter,
+    operations_center: OperationsCenter<'a>,
 }
 
 pub enum RequestAi {
@@ -30,27 +33,12 @@ pub enum RequestAi {
 /*
     Creates an ai upon instantiation
  */
-impl Ai<MyTask, DesireVariables> {
-    fn new() -> Self {
-        let database = DataCenter {
-            unique_index: 0,
-            tasks: HashMap::new() as HashMap<u128, MyTask>,
-            desire_variables: HashMap::new() as HashMap<u128, DesireVariables>,
-            alive: true,
-        };
-        Self {
-            database: &database,
-            operations_center: OperationsCenter{
-                database: &database,
-                game: Game::new()
-            },
-        }
-    }
-
+impl<'a> Ai<'a> {
     fn new_task(&mut self, task: MyTask) -> bool {
 
         // TaskExample {date: String::from("")}
-        self.database.insert_task(task)
+        // self.database.insert_task(task, MyTask { date: "".to_string(), instructions: "".to_string() })
+        todo!()
     }
 
     fn generic_request_ai(&mut self, request_ai: RequestAi) {

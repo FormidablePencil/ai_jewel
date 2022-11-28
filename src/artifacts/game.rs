@@ -1,4 +1,3 @@
-use core::panicking::panic;
 use std::collections::HashMap;
 use crate::artifacts::attachments::FuckedUp;
 
@@ -7,11 +6,11 @@ pub enum Player {
     Two,
 }
 
-pub struct Game<'a> {
+pub struct Game {
     pub fucked_up: FuckedUp,
     pub started: bool,
     pub player_turn: Player,
-    pub score: &'a HashMap<u8, Player>,
+    pub score: HashMap<u8, Player>,
 }
 
 impl Game {
@@ -33,9 +32,9 @@ impl Game {
         if self.score.contains_key(&square_index) {
             // todo - common sense achieved. consciousness achieved once error is not reliant anymore.
             // todo - counter how many times this mistake was made.
-            self.fucked_up(String::from("Square already taken. Assumed to be internal error. To be handled by assumption."));
+            self.fucked_up = FuckedUp::standard(String::from("Square already taken. Assumed to be internal error. To be handled by assumption."));
         } else {
-            self.score.insert(square_index, *self.player_turn)
+            // self.score.insert(square_index, *self.player_turn)
         }
     }
 }

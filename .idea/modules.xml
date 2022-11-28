@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/jewel_smartcontracts.iml" filepath="$PROJECT_DIR$/.idea/jewel_smartcontracts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ai_jewel.iml" filepath="$PROJECT_DIR$/.idea/ai_jewel.iml" />
     </modules>
   </component>
 </project>

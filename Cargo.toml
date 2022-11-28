@@ -11,7 +11,7 @@ lto = true
 [lib]
 crate-type = ["cdylib"]
 
-[dependencies]
-smart-contract = "0.2.0"
-smart-contract-macros = "0.2.0"
+#[dependencies]
+#smart-contract = "0.2.0"
+#smart-contract-macros = "0.2.0"
 #sorted-list = "0.2.0"
