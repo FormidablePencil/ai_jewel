@@ -12,6 +12,13 @@ impl FuckedUp {
         }
     }
 
+    pub fn standard(fucked_up_msg: String) -> FuckedUp {
+      FuckedUp {
+          fuck_up: true,
+          fucked_up_msg
+      }
+    }
+
     // gc = garbage collection
     fn fucked_up(&mut self, msg: String) {
         self.fuck_up = true;

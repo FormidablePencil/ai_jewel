@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use crate::artifacts::ai_gen::hello::Ai;
-use crate::artifacts::database::Database;
+use crate::artifacts::data_center::DataCenter;
 use crate::artifacts::desire_variables::DesireVariables;
 use crate::artifacts::game::{Game, Player};
 use crate::artifacts::operations::OperationsCenter;
@@ -14,7 +14,7 @@ fn ai_gen() {
     Ai::new();
 }
 
-pub type MyDatabase = Database<MyTask, DesireVariables>;
+pub type MyDatabase = DataCenter<MyTask, DesireVariables>;
 
 pub struct Ai<'a, Task, DesireVariables> {
     database: &'a MyDatabase,
@@ -32,7 +32,7 @@ pub enum RequestAi {
  */
 impl Ai<MyTask, DesireVariables> {
     fn new() -> Self {
-        let database = Database {
+        let database = DataCenter {
             unique_index: 0,
             tasks: HashMap::new() as HashMap<u128, MyTask>,
             desire_variables: HashMap::new() as HashMap<u128, DesireVariables>,
@@ -48,6 +48,7 @@ impl Ai<MyTask, DesireVariables> {
     }
 
     fn new_task(&mut self, task: MyTask) -> bool {
+
         // TaskExample {date: String::from("")}
         self.database.insert_task(task)
     }
