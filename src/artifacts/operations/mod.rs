@@ -1,8 +1,8 @@
 use crate::artifacts::data_center::DataCenter;
 use crate::artifacts::game::Game;
 
-mod tasks;
 mod task_operators;
+mod tasks;
 
 pub struct ComparedRelationship {
     pub winner_id: u128,

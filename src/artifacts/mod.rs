@@ -1,7 +1,8 @@
-mod game;
+mod ai;
+mod ai_gen;
 mod attachments;
 mod data_center;
-mod ai_gen;
-mod tasks_workstation;
-mod operations;
 mod desire_variables;
+mod game;
+mod operations;
+mod tasks_workstation;

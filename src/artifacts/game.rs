@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use crate::artifacts::attachments::FuckedUp;
+use std::collections::HashMap;
 
 pub enum Player {
     One,
@@ -32,7 +32,9 @@ impl Game {
         if self.score.contains_key(&square_index) {
             // todo - common sense achieved. consciousness achieved once error is not reliant anymore.
             // todo - counter how many times this mistake was made.
-            self.fucked_up = FuckedUp::standard(String::from("Square already taken. Assumed to be internal error. To be handled by assumption."));
+            self.fucked_up = FuckedUp::standard(String::from(
+                "Square already taken. Assumed to be internal error. To be handled by assumption.",
+            ));
         } else {
             // self.score.insert(square_index, *self.player_turn)
         }

@@ -1,8 +1,8 @@
-use std::collections::HashMap;
 use crate::artifacts::ai_gen::MyTask;
 use crate::artifacts::attachments::FuckedUp;
 use crate::artifacts::desire_variables::DesireVariables;
 use crate::artifacts::operations::ComparedRelationship;
+use std::collections::HashMap;
 
 pub struct TaskRank {
     pub roi: u128,
@@ -29,7 +29,6 @@ pub struct DataCenter {
 }
 
 impl DataCenter {
-
     pub fn default_data_center() -> DataCenter {
         DataCenter {
             unique_index: 0,
@@ -82,18 +81,20 @@ impl DataCenter {
     }
 
     pub fn insert_desire_variables(&mut self, desire_variables: DesireVariables) {
-        self.desire_variables.insert(self.unique_index, desire_variables);
+        self.desire_variables
+            .insert(self.unique_index, desire_variables);
     }
 
     pub fn insert_compared_relationships(&mut self, winning_relationship: ComparedRelationship) {
-        self.compared_relationships.insert(self.unique_index, winning_relationship);
+        self.compared_relationships
+            .insert(self.unique_index, winning_relationship);
     }
 
     pub fn delete_task(&mut self, index: u128) -> MyTask {
         self.desire_variables.remove(&index);
         match self.tasks.remove(&index) {
             None => todo!("return error to me..."),
-            Some(task) => task
+            Some(task) => task,
         }
     }
 

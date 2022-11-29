@@ -13,10 +13,10 @@ impl FuckedUp {
     }
 
     pub fn standard(fucked_up_msg: String) -> FuckedUp {
-      FuckedUp {
-          fuck_up: true,
-          fucked_up_msg
-      }
+        FuckedUp {
+            fuck_up: true,
+            fucked_up_msg,
+        }
     }
 
     // gc = garbage collection

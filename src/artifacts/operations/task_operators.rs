@@ -1,6 +1,6 @@
 use crate::artifacts::ai_gen::MyTask;
 use crate::artifacts::data_center::TaskRank;
-use crate::artifacts::desire_variables::{DesireVariables};
+use crate::artifacts::desire_variables::DesireVariables;
 use crate::artifacts::operations::{NewTaskRelationship, OperationsCenter};
 
 trait TasksOperations {
@@ -50,14 +50,38 @@ impl TasksOperations for OperationsCenter<'_> {
     }
 
     fn validate_roi_sameness(&mut self, task_winner_id: u128, task_looser_id: u128) -> bool {
-        let winner_roi = self.database.desire_variables.get(&task_winner_id).unwrap().get_roi();
-        let looser_roi = self.database.desire_variables.get(&task_looser_id).unwrap().get_roi();
+        let winner_roi = self
+            .database
+            .desire_variables
+            .get(&task_winner_id)
+            .unwrap()
+            .get_roi();
+        let looser_roi = self
+            .database
+            .desire_variables
+            .get(&task_looser_id)
+            .unwrap()
+            .get_roi();
         winner_roi == looser_roi
     }
 
-    fn validate_both_roi_of_tasks_exist(&self, task_winner_id: u128, task_looser_id: u128) -> CompareTasksRes {
-        let desired_var1_roi = self.database.desire_variables.get(&task_winner_id).unwrap().get_roi();
-        let desired_var2_roi = self.database.desire_variables.get(&task_looser_id).unwrap().get_roi();
+    fn validate_both_roi_of_tasks_exist(
+        &self,
+        task_winner_id: u128,
+        task_looser_id: u128,
+    ) -> CompareTasksRes {
+        let desired_var1_roi = self
+            .database
+            .desire_variables
+            .get(&task_winner_id)
+            .unwrap()
+            .get_roi();
+        let desired_var2_roi = self
+            .database
+            .desire_variables
+            .get(&task_looser_id)
+            .unwrap()
+            .get_roi();
 
         if desired_var1_roi.is_some() && desired_var2_roi.is_some() {
             CompareTasksRes::Successful
@@ -73,24 +97,35 @@ impl TasksOperations for OperationsCenter<'_> {
     }
 
     /*
-        - Checks that both loosing and winning tasks exist under id given
-        - Checks that both ROI's of tasks are the same
-        - Validates roi sameness
-            true:
-                - insert task rank
+       - Checks that both loosing and winning tasks exist under id given
+       - Checks that both ROI's of tasks are the same
+       - Validates roi sameness
+           true:
+               - insert task rank
 
-            false: return CompareTasksRes::BothTasksRoiNotSame
-     */
+           false: return CompareTasksRes::BothTasksRoiNotSame
+    */
     fn rank_tasks(&mut self, task_winner_id: u128, task_looser_id: u128) -> CompareTasksRes {
         let do_tasks_exist = self.do_tasks_exist(task_winner_id, task_looser_id);
-        if do_tasks_exist != CompareTasksRes::Successful { return do_tasks_exist; }
+        if do_tasks_exist != CompareTasksRes::Successful {
+            return do_tasks_exist;
+        }
 
         // validate if roi for ranking tasks exists
         match self.validate_both_roi_of_tasks_exist(task_winner_id, task_looser_id) {
             CompareTasksRes::Successful => {
                 if self.validate_roi_sameness(task_winner_id, task_looser_id) {
-                    let winner_roi = self.database.desire_variables.get(&task_winner_id).unwrap().get_roi().unwrap(); // already validated that desire_variable under task_winner_id and roi of it exists.
-                    self.database.insert_tasks_rank(TaskRank { task_id: task_winner_id, roi: winner_roi });
+                    let winner_roi = self
+                        .database
+                        .desire_variables
+                        .get(&task_winner_id)
+                        .unwrap()
+                        .get_roi()
+                        .unwrap(); // already validated that desire_variable under task_winner_id and roi of it exists.
+                    self.database.insert_tasks_rank(TaskRank {
+                        task_id: task_winner_id,
+                        roi: winner_roi,
+                    });
                     CompareTasksRes::BothTasksContainSameRoi
                 } else {
                     CompareTasksRes::BothTasksRoiNotSame
@@ -105,19 +140,30 @@ impl TasksOperations for OperationsCenter<'_> {
             //
             // CompareTasksRes::BothTasksRoiNotSame => {}
             // CompareTasksRes::BothTasksContainSameRoi => {}
-            _ => todo!()
+            _ => todo!(),
         }
     }
 
     fn add_task(&mut self, task: MyTask, desire_variables: DesireVariables) -> bool {
-        return if self.database.desire_variables.contains_key(&self.database.unique_index) == false
-            || self.database.tasks.contains_key(&self.database.unique_index) == false {
+        return if self
+            .database
+            .desire_variables
+            .contains_key(&self.database.unique_index)
+            == false
+            || self
+                .database
+                .tasks
+                .contains_key(&self.database.unique_index)
+                == false
+        {
             self.database.increment_unique_index();
             self.database.insert_task(self.database.unique_index, task);
             self.database.insert_desire_variables(desire_variables);
 
             true
-        } else { false };
+        } else {
+            false
+        };
     }
 
     fn rank_task(&self, task1_id: u128, task2_id: u128) {
@@ -125,14 +171,24 @@ impl TasksOperations for OperationsCenter<'_> {
             // Error
         }
 
-        let task1_desire_variables = self.database.desire_variables.get(&task1_id).unwrap().get_roi();
+        let task1_desire_variables = self
+            .database
+            .desire_variables
+            .get(&task1_id)
+            .unwrap()
+            .get_roi();
 
         // match task1_desire_variables {
         //     Ok(roi) => roi,
         //     Err(_) => {}
         // }
 
-        let task2_desire_variables = self.database.desire_variables.get(&task2_id).unwrap().get_roi();
+        let task2_desire_variables = self
+            .database
+            .desire_variables
+            .get(&task2_id)
+            .unwrap()
+            .get_roi();
         todo!();
     }
 
